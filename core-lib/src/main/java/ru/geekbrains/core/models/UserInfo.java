@@ -15,7 +15,9 @@ public class UserInfo {
 
     private Long userId;
 
-    private String userEmail;
+    private String userName;
 
     private List<String> role;
+
+
 }

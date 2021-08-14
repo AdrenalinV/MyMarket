@@ -1,70 +1,56 @@
 package ru.geekbrains.core.services;
 
-
-import io.jsonwebtoken.ExpiredJwtException;
-import lombok.SneakyThrows;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.filter.OncePerRequestFilter;
+import io.jsonwebtoken.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import ru.geekbrains.core.interfaces.ITokenService;
 import ru.geekbrains.core.models.UserInfo;
 
-
-import javax.servlet.FilterChain;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import java.util.ArrayList;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.List;
 
+@Service
+public class JWTTokenService implements ITokenService {
+    @Value("$(jwt.secret)")
+    private String JWT_SECRET;
 
-class JWTAuthenticationFilter extends OncePerRequestFilter {
-
-    private final ITokenService tokenService;
-
-    public JWTAuthenticationFilter(ITokenService tokenService) {
-        this.tokenService = tokenService;
-    }
-
-    @SneakyThrows
     @Override
-    protected void doFilterInternal(HttpServletRequest httpServletRequest,
-                                    HttpServletResponse httpServletResponse,
-                                    FilterChain filterChain) {
-        String authorizationHeader = httpServletRequest.getHeader("Authorization");
+    public String generateToken(UserInfo user) {
+        Instant expirationTime = Instant.now().plus(1, ChronoUnit.HOURS);
+        Date expirationDate = Date.from(expirationTime);
 
-        if (authorizationHeaderIsInvalid(authorizationHeader)) {
-            filterChain.doFilter(httpServletRequest, httpServletResponse);
-            return;
-        }
+        String compactTokenString = Jwts.builder()
+                .claim("id", user.getUserId())
+                .claim("sub", user.getUserName())
+                .claim("roles", user.getRole())
+                .setExpiration(expirationDate)
+                .signWith(SignatureAlgorithm.HS512, JWT_SECRET)
+                .compact();
 
-        UsernamePasswordAuthenticationToken authenticationToken = createToken(authorizationHeader);
-
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-        filterChain.doFilter(httpServletRequest, httpServletResponse);
+        return "Bearer " + compactTokenString;
     }
 
-    private boolean authorizationHeaderIsInvalid(String authorizationHeader) {
-        return authorizationHeader == null
-                || !authorizationHeader.startsWith("Bearer ");
-    }
+    @Override
+    public UserInfo parseToken(String token) throws ExpiredJwtException {
+        Jws<Claims> jwsClaims = Jwts.parser()
+                .setSigningKey(JWT_SECRET)
+                .parseClaimsJws(token);
 
-    private UsernamePasswordAuthenticationToken createToken(String authorizationHeader) throws ExpiredJwtException {
-        String token = authorizationHeader.replace("Bearer ", "");
+        String userName = jwsClaims.getBody()
+                .getSubject();
 
-        UserInfo userInfo = tokenService.parseToken(token);
+        Long userId = jwsClaims.getBody()
+                .get("id", Long.class);
 
-        List<GrantedAuthority> authorities = new ArrayList<>();
+        List<String> roles = jwsClaims.getBody()
+                .get("roles", List.class);
 
-        if (userInfo.getRole() != null && !userInfo.getRole().isEmpty()) {
-            userInfo.getRole().forEach(role -> {
-                authorities.add(new SimpleGrantedAuthority(role));
-            });
-        }
-
-        return new UsernamePasswordAuthenticationToken(userInfo, null, authorities);
+        return UserInfo.builder()
+                .userId(userId)
+                .userName(userName)
+                .role(roles)
+                .build();
     }
 }

@@ -6,19 +6,23 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ru.geekbrains.core.interfaces.ITokenService;
 import ru.geekbrains.core.models.UserInfo;
 
 
 import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.springframework.util.StringUtils.hasText;
 
+@Service
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     private final ITokenService tokenService;
@@ -31,23 +35,20 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest,
                                     HttpServletResponse httpServletResponse,
-                                    FilterChain filterChain) {
+                                    FilterChain filterChain) throws ServletException, IOException {
         String authorizationHeader = httpServletRequest.getHeader("Authorization");
-
         if (authorizationHeaderIsInvalid(authorizationHeader)) {
             filterChain.doFilter(httpServletRequest, httpServletResponse);
             return;
         }
 
         UsernamePasswordAuthenticationToken authenticationToken = createToken(authorizationHeader);
-
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 
     private boolean authorizationHeaderIsInvalid(String authorizationHeader) {
-        return authorizationHeader == null
-                || !authorizationHeader.startsWith("Bearer ");
+        return authorizationHeader==null || !authorizationHeader.startsWith("Bearer ");
     }
 
     private UsernamePasswordAuthenticationToken createToken(String authorizationHeader) throws ExpiredJwtException {
@@ -65,5 +66,4 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
         return new UsernamePasswordAuthenticationToken(userInfo, null, authorities);
     }
-
 }

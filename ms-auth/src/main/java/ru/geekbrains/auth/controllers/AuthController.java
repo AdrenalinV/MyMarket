@@ -38,12 +38,12 @@ public class AuthController {
 
     @PostMapping("/login")
     public AuthResponseDto login(@RequestBody AuthRequestDto request) {
-        User user = userService.findByUsernameAndPassword(request.getUsername(), request.getPassword());
+        User user = userService.findByLoginAndPassword(request.getUsername(), request.getPassword());
         List<String> roles = new ArrayList<>();
         user.getRoles().forEach(role -> roles.add(role.getName()));
         UserInfo userInfo = UserInfo.builder()
                 .userId(user.getId())
-                .userEmail(user.getUserName())
+                .userName(user.getUserName())
                 .role(roles)
                 .build();
         String token = iTokenService.generateToken(userInfo);
