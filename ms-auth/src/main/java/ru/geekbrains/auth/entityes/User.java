@@ -32,9 +32,6 @@ public class User {
     @Column(name = "delete_at")
     private LocalDateTime delete_at;
 
-    @OneToOne(mappedBy = "owner", optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private UserDetail userDetail;
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),

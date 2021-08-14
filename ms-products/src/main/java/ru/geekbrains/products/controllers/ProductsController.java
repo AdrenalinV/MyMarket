@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.core.exceptions.ResourceNotFoundException;
@@ -20,6 +21,7 @@ public class ProductsController {
     private final ProductService productService;
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ProductDto getProductById(@PathVariable Long id) {
         ProductDto p = new ProductDto(this.productService.findProductById(id).orElseThrow(() -> new ResourceNotFoundException("Product with id:" + id + " doesn't exist")));
         return p;

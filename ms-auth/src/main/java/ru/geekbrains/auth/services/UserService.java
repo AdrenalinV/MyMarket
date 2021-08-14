@@ -13,15 +13,13 @@ import java.util.Collections;
 
 @Service
 public class UserService {
-    
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private RoleRepository roleRepository;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
+
 
     public User saveUser(User user) {
         Role role = roleRepository.findByName("ROLE_USER");

@@ -1,4 +1,4 @@
-package ru.geekbrains.products;
+package ru.geekbrains.products.aop;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-public class LoggingASP {
+public class LoggingAOP {
     @Before("execution(public * ru.geekbrains.products.controllers.ProductsController.*(..))") // pointcut expression
     public void beforeAnyMethodInUserDAOClassWithDetails(JoinPoint joinPoint) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
