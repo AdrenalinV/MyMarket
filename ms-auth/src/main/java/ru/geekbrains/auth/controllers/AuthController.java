@@ -11,7 +11,9 @@ import ru.geekbrains.auth.dtos.SignUpRequestDto;
 import ru.geekbrains.auth.entityes.User;
 import ru.geekbrains.auth.services.UserService;
 import ru.geekbrains.core.interfaces.ITokenService;
+import ru.geekbrains.core.models.TokenInfo;
 import ru.geekbrains.core.models.UserInfo;
+import ru.geekbrains.core.repositories.RedisRepository;
 
 
 import java.util.ArrayList;
@@ -23,6 +25,9 @@ import java.util.List;
 public class AuthController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RedisRepository redisRepository;
 
     @Autowired
     private ITokenService iTokenService;
@@ -48,5 +53,11 @@ public class AuthController {
                 .build();
         String token = iTokenService.generateToken(userInfo);
         return new AuthResponseDto(token);
+    }
+
+    @GetMapping("/logout")
+    public boolean logout(@RequestHeader(name="Authorization") String token){
+        redisRepository.add(new TokenInfo(token, iTokenService.parseToken(token.replace("Bearer ", "")).getUserId()));
+        return true;
     }
 }
