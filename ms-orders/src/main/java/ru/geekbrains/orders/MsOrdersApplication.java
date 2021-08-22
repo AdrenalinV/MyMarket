@@ -1,14 +1,13 @@
-package ru.geekbrains.products;
+package ru.geekbrains.orders;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
-
-@SpringBootApplication(scanBasePackages = "ru.geekbrains")
+@SpringBootApplication
 @EnableEurekaClient
-public class MsProductsApplication {
+public class MsOrdersApplication {
     public static void main(String[] args) {
-        SpringApplication.run(MsProductsApplication.class, args);
+        SpringApplication.run(MsOrdersApplication.class, args);
     }
 }

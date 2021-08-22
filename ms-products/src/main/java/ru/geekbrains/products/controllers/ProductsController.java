@@ -21,7 +21,7 @@ public class ProductsController {
     private final ProductService productService;
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_USER')")
+//    @PreAuthorize("hasRole('ROLE_USER')")
     public ProductDto getProductById(@PathVariable Long id) {
         ProductDto p = new ProductDto(this.productService.findProductById(id).orElseThrow(() -> new ResourceNotFoundException("Product with id:" + id + " doesn't exist")));
         return p;
