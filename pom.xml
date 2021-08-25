@@ -13,6 +13,7 @@
         <module>ms-orders</module>
         <module>ms-payments</module>
         <module>eureka-server</module>
+        <module>gateway-server</module>
     </modules>
 
     <parent>
@@ -35,10 +36,7 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
-        </dependency>
+
     </dependencies>
 
     <dependencyManagement>

@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="core-lib" />
         <module name="ms-auth" />
+        <module name="gateway-server" />
         <module name="ms-products" />
         <module name="ms-payments" />
         <module name="routing-lib" />
@@ -21,6 +22,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="core-lib" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
+      <module name="gateway-server" options="-parameters" />
       <module name="ms-auth" options="-parameters" />
       <module name="ms-orders" options="-parameters" />
       <module name="ms-payments" options="-parameters" />
