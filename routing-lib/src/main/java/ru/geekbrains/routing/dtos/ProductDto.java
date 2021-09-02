@@ -1,4 +1,5 @@
-package ru.geekbrains.products.entityes;
+package ru.geekbrains.routing.dtos;
+
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,9 +11,4 @@ public class ProductDto {
     private String title;
     private double cost;
 
-    public ProductDto(Product p) {
-        this.id = p.getId();
-        this.title = p.getTitle();
-        this.cost = p.getCost();
-    }
 }

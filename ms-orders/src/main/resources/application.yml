@@ -1,11 +1,29 @@
 spring:
   application:
     name: ms-orders
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:mydatabase;MODE=PostgreSQL
+    username: sa
+    password:
+    jpa:
+      show-sql: true
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.H2Dialect
+    h2:
+      console:
+        enabled: true
+        settings:
+          web-allow-others: false
 
 server:
-  port: 8189
+  port: 0
 
 eureka:
   client:
     service-url:
       default-zone: ${EUREKA_URI:http://localhost:8761/eureka}
+
+jwt:
+  secret: 6fe546737c45eeb7a2cb3d6bf270d6db1b1a00f31ab1ad1789e16200186063d9
