@@ -6,7 +6,6 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication(scanBasePackages = "ru.geekbrains")
-@EnableEurekaClient
 @EnableFeignClients(basePackages = "ru.geekbrains")
 public class MsOrdersApplication {
     public static void main(String[] args) {

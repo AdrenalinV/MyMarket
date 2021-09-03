@@ -28,7 +28,7 @@ public class Basket {
     private double cost;
 
     @Column(name = "userId")
-    private Long uderId;
+    private Long userId;
 
     public void add(BasketItem item) {
         for (BasketItem bI : this.items) {

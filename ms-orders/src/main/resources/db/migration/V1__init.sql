@@ -1,42 +1,44 @@
+DROP TABLE IF EXISTS orders;
+
 create table orders
 (
-    id         bigserial primary key,
-    user_id    bigint,
-    price      int,
-    address    varchar(255),
+    id         INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    user_id    INTEGER NOT NULL,
+    cost       FLOAT NOT NULL,
+    address    VARCHAR(255),
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp
 );
 
 create table order_items
 (
-    id                bigserial primary key,
-    order_id          bigint references orders (id),
-    product_id        bigint,
-    title             varchar(255),
+    id                INTEGER PRIMARY KEY NOT NULL,
+    order_id          INTEGER REFERENCES orders (id),
+    product_id        INTEGER,
+    title             VARCHAR(255),
     quantity          int,
-    price_per_product int,
-    price             int,
+    cost_per_product  FLOAT,
+    cost              FLOAT,
     created_at        timestamp default current_timestamp,
     updated_at        timestamp default current_timestamp
 );
 
-create table carts
+create table baskets
 (
     id      UUID primary key,
-    user_id bigint,
-    price   int
+    user_id INTEGER,
+    cost    FLOAT
 );
 
-create table cart_items
+create table basket_items
 (
-    id                bigserial primary key,
-    cart_id           UUID references carts (id),
-    product_id        bigint,
-    title             varchar(255),
+    id                INTEGER PRIMARY KEY NOT NULL,
+    cart_id           UUID references baskets (id),
+    product_id        INTEGER,
+    title             VARCHAR(255),
     quantity          int,
-    price_per_product int,
-    price             int,
+    cost_per_product  FLOAT,
+    cost              FLOAT,
     created_at        timestamp default current_timestamp,
     updated_at        timestamp default current_timestamp
 );

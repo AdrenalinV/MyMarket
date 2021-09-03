@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ProductService {
+
     private final ProductsRepository productsRepository;
     private final ModelMapper modelMapper;
 
@@ -35,7 +36,7 @@ public class ProductService {
     }
 
     public List<ProductDto> findProductDtosByIds(List<Long> ids) {
-        return productsRepository.fiindByIdIn(ids).stream().map(this::toDto).collect(Collectors.toList());
+        return productsRepository.findByIdIn(ids).stream().map(this::toDto).collect(Collectors.toList());
     }
 
     public void deleteProductById(Long id) {

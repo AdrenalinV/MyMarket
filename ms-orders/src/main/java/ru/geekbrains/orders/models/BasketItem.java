@@ -19,7 +19,7 @@ public class BasketItem {
     @Column(name = "id")
     private Long id;
 
-    @ManyToMany
+    @ManyToOne
     @JoinColumn(name = "basket_id")
     private Basket basket;
 
@@ -35,8 +35,10 @@ public class BasketItem {
     @Column(name = "cost")
     private double cost;
 
+    @Column(name="created_at")
     @CreationTimestamp
     private LocalDateTime created_at;
+
     @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updated_at;

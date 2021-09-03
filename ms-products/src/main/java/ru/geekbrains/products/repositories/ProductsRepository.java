@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface ProductsRepository extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product> {
-    List<Product> fiindByIdIn(List<Long> ids);
+    List<Product> findByIdIn(List<Long> ids);
 
 }

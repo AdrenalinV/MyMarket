@@ -10,6 +10,6 @@ import java.util.UUID;
 
 @Repository
 public interface BasketRepository extends JpaRepository<Basket, UUID> {
-    @Query("select c from Basket c where c.userId = ?1")
+    @Query("select b from Basket b where b.userId = ?1")
     Optional<Basket> findByUserId(Long id);
 }

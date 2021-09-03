@@ -12,13 +12,13 @@ import ru.geekbrains.routing.dtos.ProductDto;
 import ru.geekbrains.routing.interfeces.ProductsClient;
 
 import javax.transaction.Transactional;
-import java.beans.Transient;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class BasketService {
+
     private final BasketRepository basketRepository;
 
     private final ProductsClient productsClient;
@@ -68,7 +68,7 @@ public class BasketService {
                 basket.merge(oldBasket.get());
                 basketRepository.delete(oldBasket.get());
             }
-            basket.setUderId(userId);
+            basket.setUserId(userId);
         }
         if (userId == null) {
             Basket basket = save(new Basket());
@@ -79,7 +79,7 @@ public class BasketService {
             return basket.get().getId();
         }
         Basket newBasket = new Basket();
-        newBasket.setUderId(userId);
+        newBasket.setUserId(userId);
         save(newBasket);
         return newBasket.getId();
     }
