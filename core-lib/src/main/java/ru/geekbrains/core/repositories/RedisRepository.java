@@ -1,16 +1,24 @@
 package ru.geekbrains.core.repositories;
 
-
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 import ru.geekbrains.core.models.TokenInfo;
 
-import java.util.Map;
+import java.time.Duration;
 
+@Component
+@RequiredArgsConstructor
+public class RedisRepository {
 
-public interface RedisRepository {
-//     Add key-value pair to Redis.
-    void add(TokenInfo token);
+    private final RedisTemplate<String, Object> redisTemplate;
 
-//    Determine if given hash hashKey exists.
-    boolean existTokenInfo(String token);
+    public void add(TokenInfo token) {
+        redisTemplate.opsForValue().set(token.getToken(), token.getUserId(), Duration.ofHours(1));
+    }
+
+    public boolean existTokenInfo(String token) {
+        return redisTemplate.opsForValue().get(token) != null;
+    }
 
 }

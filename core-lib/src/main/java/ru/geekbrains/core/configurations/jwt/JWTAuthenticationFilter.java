@@ -11,10 +11,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ru.geekbrains.core.interfaces.ITokenService;
-import ru.geekbrains.core.models.TokenInfo;
 import ru.geekbrains.core.models.UserInfo;
 import ru.geekbrains.core.repositories.RedisRepository;
-import ru.geekbrains.core.repositories.RedisRepositoryImpl;
 
 
 import javax.servlet.FilterChain;
