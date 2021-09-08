@@ -30,7 +30,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
     @Transactional
-    public OrderDto createFromUserCart(Long userId, UUID cartUuid, String address) {
+    public OrderDto createFromUserBasket(Long userId, UUID cartUuid, String address) {
         BasketDto basketDto = basketService.findById(cartUuid);
         Basket basket = modelMapper.map(basketDto, Basket.class);
         Order order = new Order(basket, userId, address);

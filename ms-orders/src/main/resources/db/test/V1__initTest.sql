@@ -2,7 +2,6 @@ DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS order_items;
 DROP TABLE IF EXISTS baskets;
 DROP TABLE IF EXISTS baskets_items;
-
 create table orders
 (
     id         INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -12,6 +11,8 @@ create table orders
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp
 );
+
+
 
 create table order_items
 (

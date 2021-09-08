@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ProductService {
+public class  ProductService {
 
     private final ProductsRepository productsRepository;
     private final ModelMapper modelMapper;

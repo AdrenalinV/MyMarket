@@ -29,7 +29,7 @@ public class OrdersController {
     @ResponseStatus(HttpStatus.CREATED)
     public OrderDto createOrderFromCart(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestParam UUID basketUuid, @RequestParam String address) {
         UserInfo userInfo = tokenService.parseToken(token);
-        OrderDto orderDto = orderService.createFromUserCart(userInfo.getUserId(), basketUuid, address);
+        OrderDto orderDto = orderService.createFromUserBasket(userInfo.getUserId(), basketUuid, address);
         basketService.clearBasket(basketUuid);
         return orderDto;
     }
