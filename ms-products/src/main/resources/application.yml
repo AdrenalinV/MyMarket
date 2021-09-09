@@ -1,7 +1,7 @@
-server:
-  port: 0
-
 spring:
+  cloud:
+    config:
+      import: optional:configserver:http://127.0.0.1:8888
   application:
     name: ms-products
   datasource:
@@ -25,5 +25,6 @@ eureka:
     service-url:
       default-zone: ${EUREKA_URI:http://localhost:8761/eureka}
 
-jwt:
-  secret: 6fe546737c45eeb7a2cb3d6bf270d6db1b1a00f31ab1ad1789e16200186063d9
+#
+#jwt:
+#  secret: 6fe546737c45eeb7a2cb3d6bf270d6db1b1a00f31ab1ad1789e16200186063d9
