@@ -10,6 +10,7 @@
         <module name="config-server" />
         <module name="core-lib" />
         <module name="ms-auth" />
+        <module name="front-server" />
         <module name="gateway-server" />
         <module name="ms-products" />
         <module name="ms-payments" />
@@ -24,6 +25,7 @@
       <module name="config-server" options="-parameters" />
       <module name="core-lib" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
+      <module name="front-server" options="-parameters" />
       <module name="gateway-server" options="-parameters" />
       <module name="ms-auth" options="-parameters" />
       <module name="ms-orders" options="-parameters" />

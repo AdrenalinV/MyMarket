@@ -2,10 +2,9 @@ package ru.geekbrains.orders.controllers;
 
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import ru.geekbrains.core.interfaces.ITokenService;
 import ru.geekbrains.core.models.UserInfo;
 import ru.geekbrains.orders.services.BasketService;
 import ru.geekbrains.orders.services.OrderService;
@@ -23,14 +22,12 @@ public class OrdersController {
 
     private final BasketService basketService;
 
-    private final ITokenService tokenService;
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderDto createOrderFromCart(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestParam UUID basketUuid, @RequestParam String address) {
-        UserInfo userInfo = tokenService.parseToken(token);
-        OrderDto orderDto = orderService.createFromUserBasket(userInfo.getUserId(), basketUuid, address);
-        basketService.clearBasket(basketUuid);
+    public OrderDto createOrderFromCart(@RequestParam String basketUuid, @RequestParam String address) {
+        UserInfo userInfo = (UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        OrderDto orderDto = orderService.createFromUserBasket(userInfo.getUserId(),UUID.fromString(basketUuid), address);
+        basketService.clearBasket(UUID.fromString(basketUuid));
         return orderDto;
     }
 
@@ -40,8 +37,8 @@ public class OrdersController {
     }
 
     @GetMapping
-    public List<OrderDto> getCurrentUserOrders(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
-        UserInfo userInfo = tokenService.parseToken(token);
+    public List<OrderDto> getCurrentUserOrders() {
+        UserInfo userInfo = (UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return orderService.findAllOrdersByUserId(userInfo.getUserId());
     }
 
