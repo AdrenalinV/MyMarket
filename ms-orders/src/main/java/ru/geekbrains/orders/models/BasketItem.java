@@ -35,7 +35,7 @@ public class BasketItem {
     @Column(name = "cost")
     private double cost;
 
-    @Column(name="created_at")
+    @Column(name = "created_at")
     @CreationTimestamp
     private LocalDateTime created_at;
 

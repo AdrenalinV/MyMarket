@@ -30,7 +30,7 @@ public class BasketService {
     }
 
     public BasketDto findById(UUID id) {
-        return modelMapper.map(basketRepository.findById(id).get(), BasketDto.class);
+        return modelMapper.map(basketRepository.findById(id).get() , BasketDto.class);
     }
 
     public Optional<Basket> findByUserId(Long userId) {

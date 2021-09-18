@@ -34,7 +34,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     private RedisRepository redisRepository;
 
 
-
     @SneakyThrows
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest,
@@ -52,7 +51,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private boolean authorizationHeaderIsInvalid(String authorizationHeader) {
-        return authorizationHeader==null || !authorizationHeader.startsWith("Bearer ") || redisRepository.existTokenInfo(authorizationHeader);
+        return authorizationHeader == null || !authorizationHeader.startsWith("Bearer ") || redisRepository.existTokenInfo(authorizationHeader);
     }
 
     private UsernamePasswordAuthenticationToken createToken(String authorizationHeader) throws ExpiredJwtException {

@@ -2,6 +2,7 @@ package ru.geekbrains.orders.controllers;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -18,15 +19,16 @@ import java.util.UUID;
 @RequestMapping("/api/v1/orders")
 @RequiredArgsConstructor
 public class OrdersController {
-    private final OrderService orderService;
-
-    private final BasketService basketService;
+    @Autowired
+    private OrderService orderService;
+    @Autowired
+    private BasketService basketService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public OrderDto createOrderFromCart(@RequestParam String basketUuid, @RequestParam String address) {
         UserInfo userInfo = (UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        OrderDto orderDto = orderService.createFromUserBasket(userInfo.getUserId(),UUID.fromString(basketUuid), address);
+        OrderDto orderDto = orderService.createFromUserBasket(userInfo.getUserId(), UUID.fromString(basketUuid), address);
         basketService.clearBasket(UUID.fromString(basketUuid));
         return orderDto;
     }

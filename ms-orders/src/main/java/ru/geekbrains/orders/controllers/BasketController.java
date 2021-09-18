@@ -2,6 +2,7 @@ package ru.geekbrains.orders.controllers;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.core.models.UserInfo;
@@ -14,7 +15,8 @@ import java.util.UUID;
 @RequestMapping("/api/v1/basket")
 @RequiredArgsConstructor
 public class BasketController {
-    private final BasketService basketService;
+    @Autowired
+    private BasketService basketService;
 
     @PostMapping
     public UUID createNewBasket() {

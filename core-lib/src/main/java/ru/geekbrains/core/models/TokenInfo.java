@@ -1,6 +1,5 @@
 package ru.geekbrains.core.models;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,8 +17,8 @@ public class TokenInfo implements Serializable {
 
     private Long userId;
 
-    public TokenInfo(String token,Long userId) {
+    public TokenInfo(String token, Long userId) {
         this.token = token;
-        this.userId=userId;
+        this.userId = userId;
     }
 }

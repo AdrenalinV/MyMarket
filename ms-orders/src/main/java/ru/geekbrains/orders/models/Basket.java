@@ -3,7 +3,6 @@ package ru.geekbrains.orders.models;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CollectionId;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -60,16 +59,16 @@ public class Basket {
     }
 
     public BasketItem getItemByProductId(Long product_id) {
-        for (BasketItem bi : items){
-            if(bi.getProduct_id()==product_id){
+        for (BasketItem bi : items) {
+            if (bi.getProduct_id() == product_id) {
                 return bi;
             }
         }
         return null;
     }
 
-    public void merge(Basket another){
-        for(BasketItem bi : another.items){
+    public void merge(Basket another) {
+        for (BasketItem bi : another.items) {
             add(bi);
         }
     }

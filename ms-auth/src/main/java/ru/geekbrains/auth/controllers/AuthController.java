@@ -56,7 +56,7 @@ public class AuthController {
     }
 
     @GetMapping("/logout")
-    public boolean logout(@RequestHeader(name="Authorization") String token){
+    public boolean logout(@RequestHeader(name = "Authorization") String token) {
         redisRepository.add(new TokenInfo(token, iTokenService.parseToken(token.replace("Bearer ", "")).getUserId()));
         return true;
     }
