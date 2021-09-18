@@ -57,6 +57,6 @@ public class ProductsController {
         if (page < 1) {
             page = 1;
         }
-        return this.productService.findProductAll(ProductSpecification.build(params), page, 2);
+        return this.productService.findProductAll(ProductSpecification.build(params), page, 4);
     }
 }
